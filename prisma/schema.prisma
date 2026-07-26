@@ -1,0 +1,54 @@
+// Prisma schema for Parley
+// Uses Prisma ORM 6.x (stable). Neon Auth (Managed Better Auth) manages its own
+// user/session tables in a separate `neon_auth` schema behind the scenes, so we
+// don't model users here — we just store the `userId` string from the auth
+// session on each record below and use it to scope queries per user.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SessionType {
+  PRICING
+  NEGOTIATION
+}
+
+// One row per AI generation the user runs, so the dashboard can show history
+// and chart Deal Health Score trends over time.
+model SessionRecord {
+  id        String      @id @default(cuid())
+  userId    String
+  type      SessionType
+
+  // Free-form request the user submitted (product description, client message, etc.)
+  input     Json
+
+  // Structured AI response (pricing tiers, counter-offer draft, reasoning, etc.)
+  output    Json
+
+  // Only populated for NEGOTIATION sessions. 0-100, higher = stronger position.
+  dealHealthScore Int?
+
+  // Which OpenRouter model actually handled the request, for transparency
+  // in the "tools I used" section of the project presentation.
+  modelUsed String
+
+  createdAt DateTime    @default(now())
+
+  @@index([userId, createdAt])
+}
+
+// A short, per-user bucket used to protect the shared AI provider quota from
+// bursts. The composite key lets Postgres reserve capacity atomically.
+model GenerationRateLimit {
+  userId       String
+  windowStart  DateTime
+  requestCount Int     @default(0)
+
+  @@id([userId, windowStart])
+}
