@@ -8,7 +8,7 @@ import { getRequiredEnv } from "@/lib/env";
  * OPENROUTER_POWER_MODELS to comma-separated model slugs.
  */
 
-export type TaskType = "pricing" | "negotiation";
+export type TaskType = "pricing" | "negotiation" | "tradeoff";
 
 export const MODEL_TIERS = {
   fast: {
@@ -71,7 +71,7 @@ export function selectModel({
   taskType,
   inputText,
 }: SelectModelInput): SelectModelResult {
-  let score = taskType === "pricing" ? 2 : 1;
+  let score = taskType === "pricing" || taskType === "tradeoff" ? 2 : 1;
   const reasons: string[] = [`task type "${taskType}" (base weight ${score})`];
 
   const wordCount = inputText.trim().split(/\s+/).filter(Boolean).length;

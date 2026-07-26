@@ -1,6 +1,7 @@
-import { Nav } from "@/components/nav";
 import { requireUser } from "@/lib/auth/guard";
 import { NegotiateForm } from "./negotiate-form";
+import { MessageSquare } from "lucide-react";
+import { DashboardLayout } from "@/components/dashboard/layout";
 
 export const dynamic = "force-dynamic";
 
@@ -8,17 +9,22 @@ export default async function NegotiatePage() {
   await requireUser();
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-ink">
-      <Nav signedIn />
-      <main className="mx-auto max-w-2xl px-6 py-12 md:px-10">
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-redline">
-          Negotiation Counter-Generator
-        </p>
-        <h1 className="mb-8 font-display text-3xl text-cream">
-          They pushed back. Now what?
-        </h1>
+      <main className="min-h-screen w-full max-w-full overflow-x-hidden">
+        <header className="sticky top-0 z-30 border-b border-ink-line bg-ink/80 px-6 py-5 backdrop-blur-lg lg:px-10">
+          <div className="flex items-center gap-3">
+            <MessageSquare className="h-6 w-6 text-redline" />
+            <div>
+              <h1 className="font-display text-2xl text-cream">Negotiation Counter-Generator</h1>
+              <p className="text-sm text-slate-text">They pushed back. Now what?</p>
+            </div>
+          </div>
+        </header>
+
         <NegotiateForm />
       </main>
     </div>
+    </DashboardLayout>
   );
 }

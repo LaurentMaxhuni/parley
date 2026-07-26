@@ -10,13 +10,17 @@ import {
   PricingResponseSchema,
   NegotiationRequestSchema,
   NegotiationResponseSchema,
+  TradeoffRequestSchema,
+  TradeoffResponseSchema,
   buildPricingPrompt,
   buildNegotiationPrompt,
+  buildTradeoffPrompt,
 } from "@/lib/prompts";
 
 const BodySchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("pricing"), payload: PricingRequestSchema }),
   z.object({ type: z.literal("negotiation"), payload: NegotiationRequestSchema }),
+  z.object({ type: z.literal("tradeoff"), payload: TradeoffRequestSchema }),
 ]);
 
 function authenticationError(error: unknown) {
@@ -78,9 +82,15 @@ export async function POST(req: NextRequest) {
   const { system, user } =
     type === "pricing"
       ? buildPricingPrompt(payload)
-      : buildNegotiationPrompt(payload);
+      : type === "negotiation"
+      ? buildNegotiationPrompt(payload)
+      : buildTradeoffPrompt(payload);
   const outputSchema =
-    type === "pricing" ? PricingResponseSchema : NegotiationResponseSchema;
+    type === "pricing"
+      ? PricingResponseSchema
+      : type === "negotiation"
+      ? NegotiationResponseSchema
+      : TradeoffResponseSchema;
   const routing = selectModel({ taskType: type, inputText: user });
 
   let raw: string;
@@ -93,7 +103,12 @@ export async function POST(req: NextRequest) {
       userPrompt: user,
       userId,
       responseSchema: {
-        name: type === "pricing" ? "pricing_advice" : "negotiation_advice",
+        name:
+          type === "pricing"
+            ? "pricing_advice"
+            : type === "negotiation"
+            ? "negotiation_advice"
+            : "concession_tradeoff",
         schema: z.toJSONSchema(outputSchema) as Record<string, unknown>,
       },
     }));
@@ -141,7 +156,7 @@ export async function POST(req: NextRequest) {
   let recordId: string | null = null;
   let warning: string | undefined;
 
-  try {
+  if (type !== "tradeoff") try {
     const record = await getPrisma().sessionRecord.create({
       data: {
         userId,

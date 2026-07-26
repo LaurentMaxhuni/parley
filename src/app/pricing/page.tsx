@@ -1,6 +1,7 @@
-import { Nav } from "@/components/nav";
 import { requireUser } from "@/lib/auth/guard";
 import { PricingForm } from "./pricing-form";
+import { DollarSign } from "lucide-react";
+import { DashboardLayout } from "@/components/dashboard/layout";
 
 export const dynamic = "force-dynamic";
 
@@ -8,17 +9,22 @@ export default async function PricingPage() {
   await requireUser();
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-ink">
-      <Nav signedIn />
-      <main className="mx-auto max-w-2xl px-6 py-12 md:px-10">
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-brass">
-          Pricing Advisor
-        </p>
-        <h1 className="mb-8 font-display text-3xl text-cream">
-          What should you charge?
-        </h1>
+      <main className="min-h-screen w-full max-w-full overflow-x-hidden">
+        <header className="sticky top-0 z-30 border-b border-ink-line bg-ink/80 px-6 py-5 backdrop-blur-lg lg:px-10">
+          <div className="flex items-center gap-3">
+            <DollarSign className="h-6 w-6 text-brass" />
+            <div>
+              <h1 className="font-display text-2xl text-cream">Pricing Advisor</h1>
+              <p className="text-sm text-slate-text">Get tiered pricing with reasoning</p>
+            </div>
+          </div>
+        </header>
+
         <PricingForm />
       </main>
     </div>
+    </DashboardLayout>
   );
 }

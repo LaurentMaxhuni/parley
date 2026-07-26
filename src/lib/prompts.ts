@@ -55,6 +55,23 @@ export const NegotiationResponseSchema = z.object({
 });
 export type NegotiationResponse = z.infer<typeof NegotiationResponseSchema>;
 
+export const TradeoffRequestSchema = NegotiationRequestSchema.extend({
+  concession: z
+    .string()
+    .trim()
+    .min(3, "Describe the concession the client is asking for.")
+    .max(1000, "Keep the concession under 1,000 characters."),
+});
+export type TradeoffRequest = z.infer<typeof TradeoffRequestSchema>;
+
+export const TradeoffResponseSchema = z.object({
+  give: z.string().min(1).max(500),
+  get: z.string().min(1).max(500),
+  rationale: z.string().min(1).max(1000),
+  message: z.string().min(1).max(2000),
+});
+export type TradeoffResponse = z.infer<typeof TradeoffResponseSchema>;
+
 const JSON_FORMAT_RULE =
   "Respond with ONLY a single valid JSON object. No markdown fences, no commentary before or after.";
 
@@ -89,6 +106,25 @@ Return JSON matching exactly this shape:
   const user = `What I asked for / quoted: ${req.yourAsk}
 What the client said back: ${req.clientMessage}
 Additional context: ${req.context || "none given"}`;
+
+  return { system, user };
+}
+
+export function buildTradeoffPrompt(req: TradeoffRequest) {
+  const system = `You are a practical negotiation strategist. Convert a requested concession into a balanced, specific trade: if the client gets something, the business gets a concrete counterweight. Do not recommend an unconditional discount. ${JSON_FORMAT_RULE}
+
+Return JSON matching exactly this shape:
+{
+  "give": string, // the limited concession to offer, if any
+  "get": string, // the exact term, scope, payment, timeline, or commitment requested in return
+  "rationale": string, // 1-3 sentences explaining why this preserves leverage
+  "message": string // a ready-to-send reply, 2-5 sentences
+}`;
+
+  const user = `Original ask: ${req.yourAsk}
+Client message: ${req.clientMessage}
+Context: ${req.context || "none given"}
+Requested concession to evaluate: ${req.concession}`;
 
   return { system, user };
 }

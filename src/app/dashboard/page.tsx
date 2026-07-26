@@ -1,7 +1,6 @@
 import { requireUser } from "@/lib/auth/guard";
 import { getPrisma } from "@/lib/prisma";
 import type { SessionRecord } from "@prisma/client";
-import { Nav } from "@/components/nav";
 import { HistoryChart } from "./history-chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +10,8 @@ import {
   PricingRequestSchema,
   PricingResponseSchema,
 } from "@/lib/prompts";
+import { DollarSign, MessageSquare, Clock, Activity } from "lucide-react";
+import { DashboardLayout } from "@/components/dashboard/layout";
 
 export const dynamic = "force-dynamic";
 
@@ -72,6 +73,37 @@ function HistoryDetails({ record }: { record: SessionRecord }) {
   );
 }
 
+const statColors = {
+  brass: "bg-brass/10 text-brass",
+  sage: "bg-sage/10 text-sage",
+  cream: "bg-cream/10 text-cream",
+  "brass-soft": "bg-brass-soft/10 text-brass-soft",
+} as const;
+
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  color = "brass"
+}: {
+  icon: React.ElementType;
+  label: string;
+  value: string | number;
+  color?: keyof typeof statColors;
+}) {
+  return (
+    <div className="flex items-center gap-4 p-4 bg-ink-soft rounded-xl border border-ink-line">
+      <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${statColors[color]}`}>
+        <Icon className="h-6 w-6" />
+      </div>
+      <div>
+        <p className="text-xs text-slate-text">{label}</p>
+        <p className="font-mono text-xl font-semibold text-cream">{value}</p>
+      </div>
+    </div>
+  );
+}
+
 export default async function DashboardPage() {
   const user = await requireUser();
 
@@ -81,62 +113,126 @@ export default async function DashboardPage() {
     take: 50,
   });
 
+  const pricingCount = records.filter(r => r.type === "PRICING").length;
+  const negotiationCount = records.filter(r => r.type === "NEGOTIATION").length;
+  const avgScore = records
+    .filter(r => r.dealHealthScore !== null)
+    .reduce((acc, r) => acc + (r.dealHealthScore || 0), 0) /
+    (records.filter(r => r.dealHealthScore !== null).length || 1);
+
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-ink">
-      <Nav signedIn />
-      <main className="mx-auto max-w-3xl px-6 py-12 md:px-10">
-        <p className="mb-2 font-mono text-xs uppercase tracking-[0.2em] text-brass">
-          Dashboard
-        </p>
-        <h1 className="mb-8 font-display text-3xl text-cream">Your history</h1>
-
-        {records.length === 0 ? (
-          <p className="text-sm text-slate-text">
-            Nothing here yet — run the Pricing Advisor or the Negotiation
-            Counter-Generator and it&apos;ll show up here.
-          </p>
-        ) : (
-          <div className="flex flex-col gap-8">
-            <HistoryChart records={records} />
-
-            <div className="flex flex-col gap-3">
-              {records.map((r) => (
-                <Card key={r.id}>
-                  <CardHeader>
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                      <CardTitle className="text-base">
-                        {r.type === "PRICING" ? "Pricing session" : "Negotiation session"}
-                      </CardTitle>
-                      <div className="flex flex-wrap items-center gap-2">
-                        {r.dealHealthScore !== null && (
-                          <Badge
-                            variant={
-                              r.dealHealthScore >= 67
-                                ? "sage"
-                                : r.dealHealthScore >= 34
-                                ? "default"
-                                : "redline"
-                            }
-                          >
-                            {r.dealHealthScore}
-                          </Badge>
-                        )}
-                        <Badge>{r.modelUsed}</Badge>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="flex flex-col gap-4">
-                    <p className="text-xs text-slate-text">
-                      {new Date(r.createdAt).toLocaleString()}
-                    </p>
-                    <HistoryDetails record={r} />
-                  </CardContent>
-                </Card>
-              ))}
+      <main className="min-h-screen">
+        <header className="sticky top-0 z-30 bg-ink/80 backdrop-blur-lg border-b border-ink-line px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="font-display text-2xl text-cream">Your History</h1>
+              <p className="text-sm text-slate-text">Track your pricing and negotiation sessions</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-xs text-slate-text">
+                {records.length} session{records.length !== 1 ? 's' : ''}
+              </span>
             </div>
           </div>
-        )}
+        </header>
+
+        <div className="p-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <StatCard
+              icon={DollarSign}
+              label="Pricing Sessions"
+              value={pricingCount}
+              color="brass"
+            />
+            <StatCard
+              icon={MessageSquare}
+              label="Negotiations"
+              value={negotiationCount}
+              color="sage"
+            />
+            <StatCard
+              icon={Activity}
+              label="Avg Deal Score"
+              value={avgScore.toFixed(0)}
+              color="cream"
+            />
+            <StatCard
+              icon={Clock}
+              label="This Month"
+              value={records.filter(r => {
+                const d = new Date(r.createdAt);
+                const now = new Date();
+                return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+              }).length}
+              color="brass-soft"
+            />
+          </div>
+
+          {records.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20">
+              <div className="w-20 h-20 rounded-2xl bg-ink-soft flex items-center justify-center mb-6">
+                <DollarSign className="h-10 w-10 text-brass/50" />
+              </div>
+              <h2 className="font-display text-xl text-cream mb-2">No sessions yet</h2>
+              <p className="text-slate-text text-center max-w-md">
+                Run the Pricing Advisor or the Negotiation Counter-Generator
+                and your results will show up here.
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col gap-8">
+              <HistoryChart records={records} />
+
+              <div className="flex flex-col gap-3">
+                {records.map((r) => (
+                  <Card key={r.id}>
+                    <CardHeader>
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-3">
+                          {r.type === "PRICING" ? (
+                            <DollarSign className="h-5 w-5 text-brass" />
+                          ) : (
+                            <MessageSquare className="h-5 w-5 text-sage" />
+                          )}
+                          <CardTitle className="text-base">
+                            {r.type === "PRICING" ? "Pricing session" : "Negotiation session"}
+                          </CardTitle>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          {r.dealHealthScore !== null && (
+                            <Badge
+                              variant={
+                                r.dealHealthScore >= 67
+                                  ? "sage"
+                                  : r.dealHealthScore >= 34
+                                  ? "default"
+                                  : "redline"
+                              }
+                            >
+                              {r.dealHealthScore}
+                            </Badge>
+                          )}
+                          <Badge>{r.modelUsed}</Badge>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="flex flex-col gap-4">
+                      <p className="text-xs text-slate-text flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {new Date(r.createdAt).toLocaleString()}
+                      </p>
+                      <HistoryDetails record={r} />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </main>
     </div>
+    </DashboardLayout>
   );
 }

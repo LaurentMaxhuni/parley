@@ -18,6 +18,9 @@ export function getAuth(): NeonAuth {
       baseUrl,
       cookies: {
         secret: cookieSecret,
+        // OAuth returns from Google are top-level cross-site navigations.
+        // "lax" preserves the challenge/session cookies for that callback.
+        sameSite: "lax",
       },
     });
   }
