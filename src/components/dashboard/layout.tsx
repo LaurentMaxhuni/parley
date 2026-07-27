@@ -23,7 +23,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-ink">
       <DashboardSidebar />
-      <main ref={mainRef} className="lg:ml-[280px] min-h-screen">
+      <main ref={mainRef} className="lg:ml-[280px] min-h-screen text-cream">
         {children}
       </main>
     </div>
