@@ -50,7 +50,7 @@ const MODEL_ENV: Record<ModelTier, string> = {
   power: "OPENROUTER_POWER_MODELS",
 };
 
-function modelsForTier(tier: ModelTier): string[] {
+export function modelsForTier(tier: ModelTier): string[] {
   const override = process.env[MODEL_ENV[tier]]
     ?.split(",")
     .map((model) => model.trim())

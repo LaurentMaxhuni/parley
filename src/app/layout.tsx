@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   title: "Parley — Pricing & Negotiation Copilot",
   description:
     "Figure out what to charge, and hold the line when a client pushes back.",
+  icons: {
+    icon: { url: "/favicon.svg", type: "image/svg+xml" },
+  },
 };
 
 export default function RootLayout({

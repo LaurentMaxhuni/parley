@@ -4,7 +4,8 @@ import { getAuth } from "@/lib/auth/server";
 import { getPrisma } from "@/lib/prisma";
 import { reserveGeneration } from "@/lib/generation-rate-limit";
 import { ConfigurationError } from "@/lib/env";
-import { selectModel, callOpenRouter } from "@/lib/openrouter";
+import { selectModel, callOpenRouter, modelsForTier } from "@/lib/openrouter";
+import { extractJson } from "@/lib/extract-json";
 import {
   PricingRequestSchema,
   PricingResponseSchema,
@@ -129,13 +130,38 @@ export async function POST(req: NextRequest) {
   }
 
   let parsedOutput: unknown;
-  try {
-    parsedOutput = JSON.parse(raw);
-  } catch {
-    return NextResponse.json(
-      { error: "The model returned malformed JSON. Try again." },
-      { status: 502 }
-    );
+  const extraction = extractJson(raw);
+  if (!extraction.success) {
+    console.error("JSON extraction failed:", extraction.error);
+
+    try {
+      const retryResult = await callOpenRouter({
+        models: modelsForTier("fast"),
+        systemPrompt: "You are a JSON fixer. Respond with ONLY valid JSON matching the requested schema. No markdown, no code fences, no extra text.",
+        userPrompt: `Fix and return valid JSON for this response. Do NOT wrap in markdown.\n\nOriginal request context:\n${user.slice(0, 1000)}\n\nBroken response:\n${raw.slice(0, 3000)}`,
+        userId,
+        responseSchema: {
+          name: type === "pricing" ? "pricing_advice" : type === "negotiation" ? "negotiation_advice" : "concession_tradeoff",
+          schema: z.toJSONSchema(outputSchema) as Record<string, unknown>,
+        },
+      });
+      const retryExtraction = extractJson(retryResult.raw);
+      if (!retryExtraction.success) {
+        return NextResponse.json(
+          { error: "The model returned malformed JSON. Try again." },
+          { status: 502 }
+        );
+      }
+      parsedOutput = retryExtraction.data;
+      modelUsed = retryResult.modelUsed;
+    } catch {
+      return NextResponse.json(
+        { error: "The model returned malformed JSON. Try again." },
+        { status: 502 }
+      );
+    }
+  } else {
+    parsedOutput = extraction.data;
   }
 
   const validated = outputSchema.safeParse(parsedOutput);
