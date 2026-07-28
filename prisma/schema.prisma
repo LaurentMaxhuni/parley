@@ -18,6 +18,20 @@ enum SessionType {
   NEGOTIATION
 }
 
+enum DealStatus {
+  LEAD
+  PROPOSAL_SENT
+  NEGOTIATING
+  WON
+  LOST
+}
+
+enum ScopeChangeStatus {
+  RECOMMENDED
+  APPROVED
+  DECLINED
+}
+
 // One row per AI generation the user runs, so the dashboard can show history
 // and chart Deal Health Score trends over time.
 model SessionRecord {
@@ -38,9 +52,92 @@ model SessionRecord {
   // in the "tools I used" section of the project presentation.
   modelUsed String
 
+  // A session can be linked to a deal later, so existing saved history stays valid.
+  dealId    String?
+  deal      Deal?       @relation(fields: [dealId], references: [id], onDelete: SetNull)
+
   createdAt DateTime    @default(now())
 
   @@index([userId, createdAt])
+  @@index([dealId, createdAt])
+}
+
+// A reusable client engagement. Each downstream artefact belongs to the same
+// user-scoped deal so it cannot be read across accounts.
+model Deal {
+  id              String            @id @default(cuid())
+  userId          String
+  clientName      String
+  title           String
+  status          DealStatus        @default(LEAD)
+  quotedValueCents Int?
+  currency        String            @default("USD")
+  targetCloseDate DateTime?
+  notes           String            @default("")
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  sessions        SessionRecord[]
+  proposals       Proposal[]
+  scopeChanges    ScopeChange[]
+  paymentSchedules PaymentSchedule[]
+
+  @@index([userId, status, updatedAt])
+}
+
+model Proposal {
+  id               String   @id @default(cuid())
+  userId           String
+  dealId           String
+  pricingSessionId String?
+  version          Int
+  tierName         String
+  tierPrice        String
+  scope            String
+  timeline         String
+  exclusions       String
+  content          String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  deal             Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@unique([dealId, version])
+  @@index([userId, dealId, createdAt])
+}
+
+model ScopeChange {
+  id         String            @id @default(cuid())
+  userId     String
+  dealId     String
+  request    String
+  approvedScope String
+  status     ScopeChangeStatus @default(RECOMMENDED)
+  output     Json
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+
+  deal       Deal              @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([userId, dealId, createdAt])
+}
+
+model PaymentSchedule {
+  id                 String   @id @default(cuid())
+  userId             String
+  dealId             String
+  contractValueCents Int
+  currency           String   @default("USD")
+  timeline           String
+  riskPreference     String
+  output             Json
+  isSelected         Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  deal               Deal     @relation(fields: [dealId], references: [id], onDelete: Cascade)
+
+  @@index([userId, dealId, createdAt])
 }
 
 // A short, per-user bucket used to protect the shared AI provider quota from

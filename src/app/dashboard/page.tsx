@@ -11,6 +11,7 @@ import {
   PricingResponseSchema,
 } from "@/lib/prompts";
 import { DollarSign, MessageSquare, Clock, Activity } from "lucide-react";
+import Link from "next/link";
 import { DashboardLayout } from "@/components/dashboard/layout";
 
 export const dynamic = "force-dynamic";
@@ -112,6 +113,12 @@ export default async function DashboardPage() {
     orderBy: { createdAt: "desc" },
     take: 50,
   });
+  const activeDeals = await getPrisma().deal.findMany({
+    where: { userId: user.id, status: { in: ["LEAD", "PROPOSAL_SENT", "NEGOTIATING"] } },
+    orderBy: { updatedAt: "desc" },
+    take: 3,
+    include: { _count: { select: { proposals: true, scopeChanges: true } } },
+  });
 
   const pricingCount = records.filter(r => r.type === "PRICING").length;
   const negotiationCount = records.filter(r => r.type === "NEGOTIATION").length;
@@ -138,7 +145,7 @@ export default async function DashboardPage() {
           </div>
         </header>
 
-        <div className="p-6">
+          <div className="p-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             <StatCard
               icon={DollarSign}
@@ -169,6 +176,11 @@ export default async function DashboardPage() {
               color="brass-soft"
             />
           </div>
+
+          <section className="mb-8 rounded-xl border border-ink-line bg-ink-soft/35 p-5">
+            <div className="flex flex-wrap items-start justify-between gap-3"><div><h2 className="font-display text-xl text-cream">Active deals</h2><p className="mt-1 text-sm text-slate-text">The client work that needs your next move.</p></div><Link href="/deals" className="text-sm text-brass hover:text-brass-soft">Open deals →</Link></div>
+            {activeDeals.length === 0 ? <p className="mt-5 text-sm text-slate-text">No active deals yet. Create a workspace to connect pricing, proposals, and terms.</p> : <div className="mt-5 grid gap-3 md:grid-cols-3">{activeDeals.map((deal) => <Link key={deal.id} href={`/deals/${deal.id}`} className="rounded-lg border border-ink-line bg-ink/30 p-4 transition-colors hover:border-brass/50"><p className="font-mono text-xs text-brass-soft">{deal.clientName}</p><p className="mt-2 text-sm text-cream">{deal.title}</p><p className="mt-3 text-xs text-slate-text">{deal._count.proposals} proposal{deal._count.proposals === 1 ? "" : "s"} · {deal._count.scopeChanges} scope check{deal._count.scopeChanges === 1 ? "" : "s"}</p></Link>)}</div>}
+          </section>
 
           {records.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20">

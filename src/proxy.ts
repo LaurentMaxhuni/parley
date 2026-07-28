@@ -11,5 +11,6 @@ export const config = {
     "/dashboard/:path*",
     "/pricing/:path*",
     "/negotiate/:path*",
+    "/deals/:path*",
   ],
 };
