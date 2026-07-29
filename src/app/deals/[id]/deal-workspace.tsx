@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { DealPulse } from "./deal-pulse";
 
 type Tier = { name: string; price: string };
 type PricingSession = { id: string; label: string; tiers: Tier[] };
@@ -20,13 +21,14 @@ type PaymentOutput = { summary: string; milestones: { label: string; percentage:
 type PaymentSchedule = { id: string; contractValueCents: number; currency: string; timeline: string; riskPreference: string; output: PaymentOutput; updatedAt: string };
 
 type Props = {
-  deal: { id: string; clientName: string; title: string; status: "LEAD" | "PROPOSAL_SENT" | "NEGOTIATING" | "WON" | "LOST"; quotedValueCents: number | null; currency: string; notes: string };
+  deal: { id: string; clientName: string; title: string; status: "LEAD" | "PROPOSAL_SENT" | "NEGOTIATING" | "WON" | "LOST"; quotedValueCents: number | null; currency: string; notes: string; targetCloseDate: string | null };
   pricingSessions: PricingSession[];
   unlinkedSessions: LinkedSession[];
   linkedSessions: LinkedSession[];
   proposals: Proposal[];
   scopeChanges: ScopeChange[];
   selectedPaymentSchedule: PaymentSchedule | null;
+  today: string;
 };
 
 const statusLabels = { LEAD: "Lead", PROPOSAL_SENT: "Proposal sent", NEGOTIATING: "Negotiating", WON: "Won", LOST: "Lost" } as const;
@@ -81,6 +83,17 @@ export function DealWorkspace(props: Props) {
           <div className="flex flex-wrap items-start justify-between gap-5"><div><p className="font-mono text-xs tracking-[0.16em] text-brass">{props.deal.clientName.toUpperCase()}</p><h1 className="mt-3 font-display text-4xl tracking-[-0.04em] text-cream md:text-5xl">{props.deal.title}</h1><p className="mt-3 max-w-2xl text-slate-text">{props.deal.notes || "Keep the client context, commercial decisions, and ready-to-send language together."}</p></div><div className="min-w-44"><Label htmlFor="deal-status">Deal status</Label><select id="deal-status" value={status} onChange={(event) => updateStatus(event.target.value as Props["deal"]["status"])} className="mt-2 h-10 w-full rounded-md border border-ink-line bg-ink-soft px-3 text-sm text-cream"><option value="LEAD">Lead</option><option value="PROPOSAL_SENT">Proposal sent</option><option value="NEGOTIATING">Negotiating</option><option value="WON">Won</option><option value="LOST">Lost</option></select><p className="mt-2 text-xs text-slate-text">{statusLabels[status]}</p></div></div>
           {statusError && <p role="alert" className="mt-4 text-sm text-redline">{statusError}</p>}
         </header>
+
+        <DealPulse
+          clientName={props.deal.clientName}
+          title={props.deal.title}
+          status={status}
+          targetCloseDate={props.deal.targetCloseDate}
+          proposalCount={props.proposals.length}
+          scopeChangeCount={props.scopeChanges.length}
+          hasPaymentSchedule={Boolean(props.selectedPaymentSchedule)}
+          today={props.today}
+        />
 
         <section className="mt-8 grid gap-4 lg:grid-cols-3">
           <Card><CardHeader><CardTitle className="text-base">Quoted value</CardTitle></CardHeader><CardContent className="font-mono text-xl text-cream">{props.deal.quotedValueCents === null ? "Not set" : money(props.deal.quotedValueCents, props.deal.currency)}</CardContent></Card>

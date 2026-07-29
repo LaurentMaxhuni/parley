@@ -25,6 +25,7 @@ function sessionLabel(type: "PRICING" | "NEGOTIATION", input: unknown) {
 export default async function DealDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const user = await requireUser();
   const { id } = await params;
+  const today = new Date().toISOString();
   const prisma = getPrisma();
   const [deal, unlinkedSessions] = await Promise.all([
     prisma.deal.findFirst({
@@ -91,6 +92,7 @@ export default async function DealDetailPage({ params }: { params: Promise<{ id:
           quotedValueCents: deal.quotedValueCents,
           currency: deal.currency,
           notes: deal.notes,
+          targetCloseDate: deal.targetCloseDate?.toISOString() ?? null,
         }}
         pricingSessions={pricingSessions}
         unlinkedSessions={unlinkedSessions.map((session) => ({ id: session.id, type: session.type, label: sessionLabel(session.type, session.input), createdAt: session.createdAt.toISOString() }))}
@@ -98,6 +100,7 @@ export default async function DealDetailPage({ params }: { params: Promise<{ id:
         proposals={deal.proposals.map((proposal) => ({ id: proposal.id, version: proposal.version, tierName: proposal.tierName, tierPrice: proposal.tierPrice, scope: proposal.scope, timeline: proposal.timeline, exclusions: proposal.exclusions, content: proposal.content, updatedAt: proposal.updatedAt.toISOString() }))}
         scopeChanges={scopeChanges}
         selectedPaymentSchedule={selectedPaymentSchedule}
+        today={today}
       />
     </DashboardLayout>
   );

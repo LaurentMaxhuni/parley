@@ -35,6 +35,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   background: var(--color-paper);
+  overflow-x: hidden;
 }
 
 * {
