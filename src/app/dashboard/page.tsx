@@ -93,13 +93,13 @@ function StatCard({
   color?: keyof typeof statColors;
 }) {
   return (
-    <div className="flex items-center gap-4 p-4 bg-ink-soft rounded-xl border border-ink-line">
-      <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${statColors[color]}`}>
+    <div className="flex min-w-0 items-center gap-4 rounded-xl border border-ink-line bg-ink-soft p-4 shadow-sm shadow-black/10 sm:p-5">
+      <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${statColors[color]}`}>
         <Icon className="h-6 w-6" />
       </div>
-      <div>
-        <p className="text-xs text-slate-text">{label}</p>
-        <p className="font-mono text-xl font-semibold text-cream">{value}</p>
+      <div className="min-w-0">
+        <p className="truncate text-xs text-slate-text">{label}</p>
+        <p className="mt-1 font-mono text-xl font-semibold tabular-nums text-cream">{value}</p>
       </div>
     </div>
   );
@@ -129,10 +129,9 @@ export default async function DashboardPage() {
 
   return (
     <DashboardLayout>
-    <div className="min-h-screen bg-ink">
-      <main className="min-h-screen">
-        <header className="sticky top-0 z-30 bg-ink/80 backdrop-blur-lg border-b border-ink-line px-6 py-4">
-          <div className="flex items-center justify-between">
+      <main className="min-h-screen bg-ink">
+        <header className="sticky top-0 z-30 border-b border-ink-line bg-ink/85 px-6 py-5 backdrop-blur-lg lg:px-10">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 pl-12 lg:pl-0">
             <div>
               <h1 className="font-display text-2xl text-cream">Your History</h1>
               <p className="text-sm text-slate-text">Track your pricing and negotiation sessions</p>
@@ -145,8 +144,8 @@ export default async function DashboardPage() {
           </div>
         </header>
 
-          <div className="p-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-10 lg:py-10">
+          <div className="mb-8 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
             <StatCard
               icon={DollarSign}
               label="Pricing Sessions"
@@ -177,21 +176,25 @@ export default async function DashboardPage() {
             />
           </div>
 
-          <section className="mb-8 rounded-xl border border-ink-line bg-ink-soft/35 p-5">
+          <section className="mb-8 rounded-xl border border-ink-line bg-ink-soft/35 p-5 shadow-sm shadow-black/10 sm:p-6">
             <div className="flex flex-wrap items-start justify-between gap-3"><div><h2 className="font-display text-xl text-cream">Active deals</h2><p className="mt-1 text-sm text-slate-text">The client work that needs your next move.</p></div><Link href="/deals" className="text-sm text-brass hover:text-brass-soft">Open deals →</Link></div>
             {activeDeals.length === 0 ? <p className="mt-5 text-sm text-slate-text">No active deals yet. Create a workspace to connect pricing, proposals, and terms.</p> : <div className="mt-5 grid gap-3 md:grid-cols-3">{activeDeals.map((deal) => <Link key={deal.id} href={`/deals/${deal.id}`} className="rounded-lg border border-ink-line bg-ink/30 p-4 transition-colors hover:border-brass/50"><p className="font-mono text-xs text-brass-soft">{deal.clientName}</p><p className="mt-2 text-sm text-cream">{deal.title}</p><p className="mt-3 text-xs text-slate-text">{deal._count.proposals} proposal{deal._count.proposals === 1 ? "" : "s"} · {deal._count.scopeChanges} scope check{deal._count.scopeChanges === 1 ? "" : "s"}</p></Link>)}</div>}
           </section>
 
           {records.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20">
-              <div className="w-20 h-20 rounded-2xl bg-ink-soft flex items-center justify-center mb-6">
+            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-ink-line px-6 py-20 text-center">
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-ink-soft">
                 <DollarSign className="h-10 w-10 text-brass/50" />
               </div>
-              <h2 className="font-display text-xl text-cream mb-2">No sessions yet</h2>
-              <p className="text-slate-text text-center max-w-md">
+              <h2 className="font-display text-xl text-cream">No sessions yet</h2>
+              <p className="mt-2 max-w-md text-slate-text">
                 Run the Pricing Advisor or the Negotiation Counter-Generator
                 and your results will show up here.
               </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Link href="/pricing" className="rounded-md bg-brass px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-brass-soft">Open Pricing Advisor</Link>
+                <Link href="/negotiate" className="rounded-md border border-ink-line px-4 py-2 text-sm font-medium text-slate-text transition-colors hover:bg-ink-soft hover:text-cream">Draft a counter</Link>
+              </div>
             </div>
           ) : (
             <div className="flex flex-col gap-8">
@@ -244,7 +247,6 @@ export default async function DashboardPage() {
           )}
         </div>
       </main>
-    </div>
     </DashboardLayout>
   );
 }

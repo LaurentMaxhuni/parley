@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { PrismaNeonHTTP } from "@prisma/adapter-neon";
 import { getRequiredEnv } from "@/lib/env";
 
 const globalForPrisma = globalThis as unknown as {
@@ -11,10 +12,13 @@ const globalForPrisma = globalThis as unknown as {
  * new connection pool on every save.
  */
 export function getPrisma(): PrismaClient {
-  getRequiredEnv("DATABASE_URL");
+  const databaseUrl = getRequiredEnv("DATABASE_URL");
 
   if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = new PrismaClient();
+    // Use Neon’s HTTP driver to avoid the Windows Schannel TLS path used by
+    // Prisma’s native engine during local development.
+    const adapter = new PrismaNeonHTTP(databaseUrl, {});
+    globalForPrisma.prisma = new PrismaClient({ adapter });
   }
 
   return globalForPrisma.prisma;

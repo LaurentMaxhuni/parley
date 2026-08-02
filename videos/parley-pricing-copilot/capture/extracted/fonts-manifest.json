@@ -1,0 +1,285 @@
+{
+  "files": [
+    {
+      "file": "03bda585a99c6450-s.p.32sris142tqlb.woff2",
+      "family": "Fraunces",
+      "rawFamily": "Fraunces",
+      "subfamily": "Regular",
+      "postscript": "Fraunces-Regular",
+      "weight": 900,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "1e219c03c996efbd-s.2qo5md4hn_gum.woff2",
+      "family": "Fraunces",
+      "rawFamily": "Fraunces",
+      "subfamily": "Regular",
+      "postscript": "Fraunces-Regular",
+      "weight": 900,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "2fe89d53234c61d4-s.1u30mmyq6lnsd.woff2",
+      "family": "IBM Plex Mono",
+      "rawFamily": "IBM Plex Mono",
+      "subfamily": "Regular",
+      "postscript": "IBMPlexMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+      "family": "Fraunces",
+      "rawFamily": "Fraunces",
+      "subfamily": "Italic",
+      "postscript": "Fraunces-Italic",
+      "weight": 900,
+      "style": "italic",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "50a3f1070da3c6cc-s.2xm1k7t3a0pcd.woff2",
+      "family": "Fraunces",
+      "rawFamily": "Fraunces",
+      "subfamily": "Italic",
+      "postscript": "Fraunces-Italic",
+      "weight": 900,
+      "style": "italic",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "53b9e256198e5412-s.390ncx5urfkfu.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "59b15b4bcd7b1eb5-s.2vemzm0itqzfy.woff2",
+      "family": "IBM Plex Mono",
+      "rawFamily": "IBM Plex Mono",
+      "subfamily": "Regular",
+      "postscript": "IBMPlexMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "7178b3e590c64307-s.21jp631_3pja2.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "8a480f0b521d4e75-s.1qq4vpdcun5oj.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "99e609270109b47d-s.p.40sczeszzbjw1.woff2",
+      "family": "IBM Plex Mono",
+      "rawFamily": "IBM Plex Mono",
+      "subfamily": "Regular",
+      "postscript": "IBMPlexMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "a7afbb44bec2bb18-s.1qc6dx89jd2qv.woff2",
+      "family": "IBM Plex Mono",
+      "rawFamily": "IBM Plex Mono Medium",
+      "subfamily": "Regular",
+      "postscript": "IBMPlexMono-Medium",
+      "weight": 500,
+      "style": "normal",
+      "variationAxes": [],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "b35b0dbffda7f2c4-s.1d9rlgtqyj_-l.woff2",
+      "family": "Fraunces",
+      "rawFamily": "Fraunces",
+      "subfamily": "Regular",
+      "postscript": "Fraunces-Regular",
+      "weight": 900,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "b887d91685b8c137-s.330vchwb4izzb.woff2",
+      "family": "Fraunces",
+      "rawFamily": "Fraunces",
+      "subfamily": "Italic",
+      "postscript": "Fraunces-Italic",
+      "weight": 900,
+      "style": "italic",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "e390973e931a41c5-s.0rgnxg2b64rzs.woff2",
+      "family": "IBM Plex Mono",
+      "rawFamily": "IBM Plex Mono",
+      "subfamily": "Regular",
+      "postscript": "IBMPlexMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "e532fa1b9921e1cd-s.3cb5lpr2l6xud.woff2",
+      "family": "IBM Plex Mono",
+      "rawFamily": "IBM Plex Mono",
+      "subfamily": "Regular",
+      "postscript": "IBMPlexMono-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [],
+      "identified": true,
+      "isIcon": false
+    },
+    {
+      "file": "fef07dbb0973bf53-s.3p2_lha1f2xer.woff2",
+      "family": "Geist",
+      "rawFamily": "Geist",
+      "subfamily": "Regular",
+      "postscript": "Geist-Regular",
+      "weight": 400,
+      "style": "normal",
+      "variationAxes": [
+        "wght"
+      ],
+      "identified": true,
+      "isIcon": false
+    }
+  ],
+  "families": [
+    {
+      "family": "Fraunces",
+      "weights": [
+        900
+      ],
+      "variable": true,
+      "fileCount": 6,
+      "files": [
+        "03bda585a99c6450-s.p.32sris142tqlb.woff2",
+        "1e219c03c996efbd-s.2qo5md4hn_gum.woff2",
+        "3c7c6164b2587822-s.p.16u3vygyjnhr0.woff2",
+        "50a3f1070da3c6cc-s.2xm1k7t3a0pcd.woff2",
+        "b35b0dbffda7f2c4-s.1d9rlgtqyj_-l.woff2",
+        "b887d91685b8c137-s.330vchwb4izzb.woff2"
+      ]
+    },
+    {
+      "family": "Geist",
+      "weights": [
+        400
+      ],
+      "variable": true,
+      "fileCount": 5,
+      "files": [
+        "53b9e256198e5412-s.390ncx5urfkfu.woff2",
+        "7178b3e590c64307-s.21jp631_3pja2.woff2",
+        "8a480f0b521d4e75-s.1qq4vpdcun5oj.woff2",
+        "caa3a2e1cccd8315-s.p.0wgildi0cnwt9.woff2",
+        "fef07dbb0973bf53-s.3p2_lha1f2xer.woff2"
+      ]
+    },
+    {
+      "family": "IBM Plex Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "variable": false,
+      "fileCount": 6,
+      "files": [
+        "2fe89d53234c61d4-s.1u30mmyq6lnsd.woff2",
+        "59b15b4bcd7b1eb5-s.2vemzm0itqzfy.woff2",
+        "99e609270109b47d-s.p.40sczeszzbjw1.woff2",
+        "a7afbb44bec2bb18-s.1qc6dx89jd2qv.woff2",
+        "e390973e931a41c5-s.0rgnxg2b64rzs.woff2",
+        "e532fa1b9921e1cd-s.3cb5lpr2l6xud.woff2"
+      ]
+    }
+  ],
+  "unidentified": [],
+  "meta": {
+    "generatedAt": "2026-07-30T16:40:55.763Z",
+    "tool": "fontkit"
+  }
+}

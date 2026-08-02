@@ -46,6 +46,13 @@ body {
   --landing-nav-height: 64px;
 }
 
+input,
+textarea,
+select {
+  max-width: 100%;
+  color-scheme: dark;
+}
+
 :focus-visible {
   outline: 2px solid var(--color-brass);
   outline-offset: 2px;

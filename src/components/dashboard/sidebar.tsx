@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { authClient } from "@/lib/auth/client";
+import { authErrorMessage } from "@/lib/auth/errors";
 import { Button } from "@/components/ui/button";
 import {
   BookOpen,
@@ -67,6 +68,7 @@ export function DashboardSidebar() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [avatarFailed, setAvatarFailed] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | null>(null);
   const { data: session } = authClient.useSession();
   const user = session?.user as SessionUser | undefined;
 
@@ -87,7 +89,13 @@ export function DashboardSidebar() {
 
   async function handleSignOut() {
     setSigningOut(true);
-    await authClient.signOut();
+    setSignOutError(null);
+    const { error } = await authClient.signOut();
+    if (error) {
+      setSignOutError(error.code === "INVALID_ORIGIN" ? authErrorMessage(error) : error.message || "Could not sign out. Please try again.");
+      setSigningOut(false);
+      return;
+    }
     window.location.assign("/");
   }
 
@@ -187,7 +195,7 @@ export function DashboardSidebar() {
                 {avatarUrl && !avatarFailed ? <img src={avatarUrl} alt={`${displayName} profile`} className="h-11 w-11 shrink-0 rounded-full object-cover ring-1 ring-brass/25" onError={() => setAvatarFailed(true)} /> : <div aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brass/10 font-mono text-sm font-medium text-brass-soft ring-1 ring-brass/20">{initials || <Sparkle className="h-4 w-4 text-brass" />}</div>}
                 <div className="min-w-0"><p className="truncate text-sm font-medium text-cream">{displayName}</p><p className="truncate text-xs text-slate-text">{user?.email || "Signed-in account"}</p></div>
               </div>
-              <div className="border-t border-ink-line p-2"><Button variant="ghost" size="sm" className="w-full justify-start gap-3 text-slate-text hover:bg-ink hover:text-cream" onClick={handleSignOut} disabled={signingOut} role="menuitem"><SignOut className="h-5 w-5" /><span>{signingOut ? "Signing out…" : "Sign out"}</span></Button></div>
+              <div className="border-t border-ink-line p-2"><Button variant="ghost" size="sm" className="w-full justify-start gap-3 text-slate-text hover:bg-ink hover:text-cream" onClick={handleSignOut} disabled={signingOut} role="menuitem"><SignOut className="h-5 w-5" /><span>{signingOut ? "Signing out…" : "Sign out"}</span></Button>{signOutError && <p role="alert" className="px-2 pb-1 pt-2 text-xs leading-relaxed text-redline">{signOutError}</p>}</div>
             </div>
           )}
 

@@ -39,6 +39,12 @@ structured advice, saved per-user history, and a Deal Health Score dashboard.
    credentials there. No Google secret belongs in this app's environment
    file; Neon Auth owns the provider configuration and callback flow.
 
+   Also add every URL that serves Parley to Neon Console → **Auth** →
+   **Configuration** → **Trusted origins**. At minimum, development normally
+   needs `http://localhost:3000`; add the exact production and preview URLs
+   you use as well. An omitted URL makes Neon Auth reject sign-in and sign-out
+   requests with `INVALID_ORIGIN`.
+
 3. Install dependencies and apply the committed database migration:
 
    ```bash

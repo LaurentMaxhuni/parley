@@ -1,0 +1,99 @@
+[a] Features
+[a] How It Works
+[a] Get started
+[h1] Know what to charge.
+[span] Hold the line
+[h1] when they push back.
+[p] Freelancers and small businesses lose money twice: once by under-pricing, and again by folding the moment a client says “can you do it for less?” Parley helps with both.
+[a] Try the Pricing Advisor
+[a] Draft a counter-offer
+[p] The problem & the fix
+[h2] You're leaving money on the table
+[span] twice
+[h3] Underpricing by default
+[p] Most freelancers guess at rates based on what feels safe, not what the market bears or what the work is worth.
+[p] 47% undercharge by 30%+
+[h3] Folding under pressure
+[p] When a client pushes back, the instinct is to discount immediately — losing margin and signaling low confidence.
+[p] 68% discount on first pushback
+[h3] No repeatable process
+[p] Every new project starts from zero. No framework for pricing, no template for negotiation, no institutional memory.
+[p] Zero reusable assets
+[h3] Pricing Advisor
+[p] Describe your service and client. Get three tiered prices with reasoning — cost basis, market positioning, and value anchors.
+[p] Model-routed: cheap model for simple scopes, premium for complex
+[h3] Negotiation Counter-Generator
+[p] Paste the client's pushback. Get a Deal Health Score (0-100), a verdict (Walk Away / Counter / Hold Firm), and a ready-to-send reply.
+[p] Tone-matched: professional, firm, not arrogant
+[h3] Model transparency dashboard
+[p] Every request shows exactly which AI model handled it — GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro — with latency and token costs.
+[p] No black box. You see the reasoning path.
+[h2] From first number to a signed agreement, without the guesswork.
+[h3] Describe the work
+[p] Add the service, client, timeline, and constraints that shape the value of the engagement.
+[div] Clear next step
+[h3] Set three strong price points
+[p] See a defensible floor, target, and stretch price with the rationale behind each one.
+[div] Clear next step
+[h3] Bring the pushback
+[p] Paste the message when a client asks for a discount or changes the terms.
+[div] Clear next step
+[h3] Reply with leverage
+[p] Get a deal-health read and a clear response that protects scope, price, and tone.
+[div] Clear next step
+[h3] Build your playbook
+[p] Your previous decisions stay organized, so each new conversation starts smarter.
+[div] Clear next step
+[p] What you get
+[h2] Everything you need to
+[span] price confidently
+[h2] and
+[span] negotiate professionally
+[span] Pricing Advisor
+[h3] Tiered pricing with reasoning
+[p] Three price points — floor, target, stretch — each with cost basis, market data, and value anchors explained in plain English.
+[span] Negotiation
+[h3] Ready-to-send counter messages
+[p] Professional, firm, not arrogant. Tone-matched to your style. Copy button built in. No wordsmithing required.
+[span] Negotiation
+[h3] Deal Health Score (0-100)
+[p] Instant read on whether to walk away, counter, or hold firm. Color-coded zones with clear thresholds.
+[span] Platform
+[h3] Smart model routing
+[p] Simple scopes → fast/cheap models. Complex negotiations → reasoning models. You see exactly which model ran and why.
+[span] Platform
+[h3] Full reasoning trail
+[p] Every output includes the model's step-by-step logic. Audit the thinking. Learn the patterns. Build your own playbook.
+[span] Platform
+[h3] History dashboard
+[p] All past sessions searchable. Filter by type, model, score, date. Export data. See your pricing evolution over time.
+[span] Security
+[h3] Neon Auth — secure by default
+[p] Email/password + Google OAuth. Sessions in Neon Postgres. No auth code to maintain. Enterprise-grade without the enterprise work.
+[span] Security
+[h3] Your data, your database
+[p] Runs on your Neon Postgres. Sessions, history, preferences — all yours. No vendor lock-in on the data layer.
+[span] Performance
+[h3] Edge-ready, globally fast
+[p] Next.js 16 on Vercel Edge. Sub-100ms TTFB worldwide. Streaming responses. Works on mobile, desktop, tablet.
+[p] Built with Next.js 16, Neon Auth, Prisma, GSAP, Chart.js
+[h2] A sharper way to have the conversations that set your business up.
+[h3] A price you can explain
+[p] Move from a single nervous number to a clear range, with the logic that supports it.
+[h3] Language that keeps the relationship intact
+[p] Turn an awkward reply into a practical next step without performing confidence you do not feel.
+[h3] A private record of your decisions
+[p] Keep the context, reasoning, and outcomes from past conversations close when the next opportunity arrives.
+[h2] Know your price.
+[span] Hold the line.
+[p] Join freelancers and small teams who've stopped undercharging and started negotiating from strength.
+[a] Start free — no card required
+[a] Sign in to dashboard
+[p] Free tier includes 10 pricing sessions/month, 5 negotiations/month, full dashboard history.
+[p] Pricing and negotiation support for independent businesses that want to make their work count.
+[a] Pricing Advisor
+[a] Negotiation Counter
+[a] Dashboard
+[a] hello@parley.app
+[p] Parley. All rights reserved.
+[p] Built with Next.js, Neon Auth, Prisma, and OpenRouter

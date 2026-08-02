@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "webAnimations": 1,
+    "cssDeclarations": 67,
+    "scrollTargets": 45,
+    "cdpAnimations": 319,
+    "canvases": 0
+  },
+  "namedAnimations": [
+    "bounce"
+  ],
+  "scrollTriggeredElements": 45,
+  "representativeAnimations": [
+    {
+      "type": "CSSAnimation",
+      "playState": "running",
+      "animationName": "bounce",
+      "targetSelector": "div.absolute.bottom-8.left-1/2",
+      "targetRect": {
+        "x": 948,
+        "y": 803.4615478515625,
+        "width": 24,
+        "height": 24,
+        "top": 803.4615478515625,
+        "right": 972,
+        "bottom": 827.4615478515625,
+        "left": 948
+      },
+      "keyframes": [
+        {
+          "offset": 0,
+          "easing": "cubic-bezier(0.8, 0, 1, 1)",
+          "composite": "auto",
+          "transform": "translateY(-25%)",
+          "computedOffset": 0
+        },
+        {
+          "offset": 0.5,
+          "easing": "cubic-bezier(0, 0, 0.2, 1)",
+          "composite": "auto",
+          "transform": "none",
+          "computedOffset": 0.5
+        },
+        {
+          "offset": 1,
+          "easing": "cubic-bezier(0.8, 0, 1, 1)",
+          "composite": "auto",
+          "transform": "translateY(-25%)",
+          "computedOffset": 1
+        }
+      ],
+      "timing": {
+        "duration": 1000,
+        "delay": 0,
+        "iterations": null,
+        "easing": "linear",
+        "direction": "normal"
+      }
+    }
+  ]
+}

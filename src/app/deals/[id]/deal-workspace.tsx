@@ -77,8 +77,8 @@ export function DealWorkspace(props: Props) {
   }
 
   return (
-    <main className="min-h-screen bg-ink px-6 py-10 lg:px-10 lg:py-14">
-      <div className="mx-auto max-w-6xl">
+    <main className="min-h-screen overflow-x-clip bg-ink px-6 py-10 lg:px-10 lg:py-14">
+      <div className="mx-auto min-w-0 max-w-6xl">
         <header className="border-b border-ink-line pb-8">
           <div className="flex flex-wrap items-start justify-between gap-5"><div><p className="font-mono text-xs tracking-[0.16em] text-brass">{props.deal.clientName.toUpperCase()}</p><h1 className="mt-3 font-display text-4xl tracking-[-0.04em] text-cream md:text-5xl">{props.deal.title}</h1><p className="mt-3 max-w-2xl text-slate-text">{props.deal.notes || "Keep the client context, commercial decisions, and ready-to-send language together."}</p></div><div className="min-w-44"><Label htmlFor="deal-status">Deal status</Label><select id="deal-status" value={status} onChange={(event) => updateStatus(event.target.value as Props["deal"]["status"])} className="mt-2 h-10 w-full rounded-md border border-ink-line bg-ink-soft px-3 text-sm text-cream"><option value="LEAD">Lead</option><option value="PROPOSAL_SENT">Proposal sent</option><option value="NEGOTIATING">Negotiating</option><option value="WON">Won</option><option value="LOST">Lost</option></select><p className="mt-2 text-xs text-slate-text">{statusLabels[status]}</p></div></div>
           {statusError && <p role="alert" className="mt-4 text-sm text-redline">{statusError}</p>}
@@ -101,14 +101,18 @@ export function DealWorkspace(props: Props) {
           <Card><CardHeader><CardTitle className="text-base">Scope decisions</CardTitle></CardHeader><CardContent className="font-mono text-xl text-cream">{props.scopeChanges.length}</CardContent></Card>
         </section>
 
-        <section className="mt-8 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-          <div className="space-y-6">
+        <section className="mt-8 min-w-0 grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+          <div className="min-w-0 space-y-6">
             <ProposalBuilder dealId={props.deal.id} pricingSessions={props.pricingSessions} />
             <ScopeChangeGuard dealId={props.deal.id} defaultScope={props.proposals[0]?.scope ?? props.deal.notes} changes={props.scopeChanges} />
           </div>
-          <div className="space-y-6">
-            <PaymentTermsPlanner dealId={props.deal.id} initialValue={props.deal.quotedValueCents} currency={props.deal.currency} selectedSchedule={props.selectedPaymentSchedule} />
-            <SessionLinker linkedSessions={props.linkedSessions} unlinkedSessions={props.unlinkedSessions} linkId={linkId} setLinkId={setLinkId} onLink={linkSession} loading={linking} />
+          <div className="min-w-0 space-y-6">
+            <div className="min-w-0 overflow-hidden">
+              <PaymentTermsPlanner dealId={props.deal.id} initialValue={props.deal.quotedValueCents} currency={props.deal.currency} selectedSchedule={props.selectedPaymentSchedule} />
+            </div>
+            <div className="min-w-0 overflow-hidden">
+              <SessionLinker linkedSessions={props.linkedSessions} unlinkedSessions={props.unlinkedSessions} linkId={linkId} setLinkId={setLinkId} onLink={linkSession} loading={linking} />
+            </div>
           </div>
         </section>
 

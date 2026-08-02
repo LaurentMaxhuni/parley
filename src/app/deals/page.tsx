@@ -30,10 +30,10 @@ export default async function DealsPage() {
 
   return (
     <DashboardLayout>
-      <main className="min-h-screen bg-ink px-6 py-10 lg:px-10 lg:py-14">
+      <main className="min-h-screen bg-ink px-6 py-10 pb-16 lg:px-10 lg:py-14 lg:pb-20">
         <div className="mx-auto max-w-6xl">
           <header className="border-b border-ink-line pb-10">
-            <div className="flex items-center gap-3 text-brass"><BriefcaseBusiness className="h-5 w-5" /><span className="font-mono text-xs tracking-[0.16em]">DEAL WORKSPACE</span></div>
+            <div className="flex items-center gap-3 pl-10 text-brass lg:pl-0"><BriefcaseBusiness className="h-5 w-5" /><span className="font-mono text-xs tracking-[0.16em]">DEAL WORKSPACE</span></div>
             <h1 className="mt-5 max-w-4xl font-display text-4xl leading-[0.98] tracking-[-0.04em] text-cream md:text-6xl">Move good opportunities all the way to yes.</h1>
             <p className="mt-5 max-w-2xl leading-relaxed text-slate-text">Bring pricing, negotiation, scope protection, proposals, and payment terms into one private workspace for every client engagement.</p>
           </header>

@@ -88,7 +88,7 @@ export default function CalculatorPage() {
         <section className="mx-auto grid min-h-screen max-w-[1600px] grid-cols-1 lg:grid-cols-12">
           <div className="border-b border-ink-line px-6 pb-14 pt-10 lg:col-span-7 lg:border-b-0 lg:border-r lg:px-10 lg:pb-20 lg:pt-14 xl:px-14">
             <div className="max-w-3xl">
-              <div className="flex items-center gap-3 pl-9 text-brass lg:pl-0">
+              <div className="flex items-center gap-3 pl-10 text-brass lg:pl-0">
                 <Calculator className="h-6 w-6" weight="duotone" />
                 <span className="font-mono text-xs tracking-[0.16em]">
                   RATE CALCULATOR

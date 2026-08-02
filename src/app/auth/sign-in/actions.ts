@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { getAuth } from "@/lib/auth/server";
+import { authErrorMessage } from "@/lib/auth/errors";
 import { redirect } from "next/navigation";
 
 const SignInSchema = z.object({
@@ -25,7 +26,7 @@ export async function signInWithEmail(
   try {
     const { error } = await getAuth().signIn.email(parsed.data);
     if (error) {
-      return { error: error.message || "Failed to sign in. Try again." };
+      return { error: error.code === "INVALID_ORIGIN" ? authErrorMessage(error) : error.message || "Failed to sign in. Try again." };
     }
   } catch (error) {
     console.error("Sign in failed:", error);

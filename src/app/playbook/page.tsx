@@ -27,7 +27,7 @@ export default async function PlaybookPage() {
       <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-ink px-6 py-10 lg:px-10 lg:py-14">
         <div className="mx-auto max-w-6xl">
           <header className="border-b border-ink-line pb-10 md:pb-14">
-            <div className="flex items-center gap-3 text-brass">
+            <div className="flex items-center gap-3 pl-10 text-brass lg:pl-0">
               <BookOpen className="h-5 w-5" />
               <span className="font-mono text-xs tracking-[0.16em]">YOUR PLAYBOOK</span>
             </div>

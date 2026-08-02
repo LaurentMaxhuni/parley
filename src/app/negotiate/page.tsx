@@ -10,10 +10,9 @@ export default async function NegotiatePage() {
 
   return (
     <DashboardLayout>
-    <div className="min-h-screen bg-ink">
-      <main className="min-h-screen w-full max-w-full overflow-x-hidden">
+      <main className="min-h-screen w-full max-w-full overflow-x-hidden bg-ink">
         <header className="sticky top-0 z-30 border-b border-ink-line bg-ink/80 px-6 py-5 backdrop-blur-lg lg:px-10">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 pl-12 lg:pl-0">
             <MessageSquare className="h-6 w-6 text-redline" />
             <div>
               <h1 className="font-display text-2xl text-cream">Negotiation Counter-Generator</h1>
@@ -24,7 +23,6 @@ export default async function NegotiatePage() {
 
         <NegotiateForm />
       </main>
-    </div>
     </DashboardLayout>
   );
 }
